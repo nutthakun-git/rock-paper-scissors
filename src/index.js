@@ -7,6 +7,6 @@
       });
 
       // Listen for messages from the main process
-      window.electron.onReceiveMessage((event, message) => {
+      window.electron.onMessageReceived((event, message) => {
         console.log('Received from main:', message); // Logs the message from the main process
       });

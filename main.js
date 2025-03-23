@@ -1,7 +1,9 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, globalShortcut } = require('electron')
+
+let win // Declare win variable outside of createWindow
 
 const createWindow = () => {
-  const win = new BrowserWindow({
+  win = new BrowserWindow({ // Assign the win reference here
     width: 800,
     height: 600,
     icon: './img/icon.png'
@@ -13,4 +15,13 @@ const createWindow = () => {
 
 app.whenReady().then(() => {
   createWindow()
+
+  // Register global shortcut (Ctrl+Shift+I) to open DevTools
+  globalShortcut.register('Ctrl+Shift+I', () => {
+    win.webContents.openDevTools()
+  })
+})
+
+app.on('will-quit', () => {
+  globalShortcut.unregisterAll() // Clean up global shortcuts when the app quits
 })
